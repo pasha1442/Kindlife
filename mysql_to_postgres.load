@@ -1,0 +1,15 @@
+LOAD DATABASE
+     FROM mysql://akash:Akash123!@127.0.0.1:3306/Kindlife
+     INTO postgresql://akash:auriga@localhost:5433/Kindlife
+
+ WITH include no drop, create tables, create indexes, reset sequences,
+      data only, workers = 4
+
+ SET work_mem = '16MB',
+     maintenance_work_mem = '512 MB'
+
+ ALTER SCHEMA 'your_mysql_schema' RENAME TO 'public'
+
+ CAST type datetime to timestamptz,
+      type int when nullable to integer using int-to-string,
+      type varchar when nullable to text drop not null;
